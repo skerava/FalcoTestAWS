@@ -1,0 +1,25 @@
+:apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: falco-test
+  region: ap-southeast-1
+
+managedNodeGroups:
+  - name: eks-mng-test
+    instanceType: m5.xlarge
+    desiredCapacity: 2
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    wellKnownPolicies:
+      awsLoadBalancerController: true
+
+cloudWatch:
+ clusterLogging:
+   enableTypes: ["*"]
+   logRetentionInDays: 30

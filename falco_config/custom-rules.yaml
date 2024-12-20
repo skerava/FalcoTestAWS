@@ -1,0 +1,8 @@
+customRules:
+  custom-rules.yaml: |-
+    - rule: The program "whoami" is run in a container
+      desc: An event will trigger every time you run "whoami" in a container
+      condition: evt.type = execve and evt.dir=< and container.id != host and proc.name = whoami
+      output: "whoami command run in container (user=%user.name %container.info parent=%proc.pname cmdline=%proc.cmdline)"
+      priority: NOTICE
+      warn_evttypes: False
